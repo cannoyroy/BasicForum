@@ -146,7 +146,15 @@ GitHub忽略了上传的 .gitignore 文件
 # 项目浏览
 
 ![](https://github.com/cannoyroy/BasicForum/blob/main/assets/1.png)
-
+![](https://github.com/cannoyroy/BasicForum/blob/main/assets/2.png)
+![](https://github.com/cannoyroy/BasicForum/blob/main/assets/3.png)
+![](https://github.com/cannoyroy/BasicForum/blob/main/assets/4.png)
+![](https://github.com/cannoyroy/BasicForum/blob/main/assets/5.png)
+![](https://github.com/cannoyroy/BasicForum/blob/main/assets/6.png)
+![](https://github.com/cannoyroy/BasicForum/blob/main/assets/7.png)
+![](https://github.com/cannoyroy/BasicForum/blob/main/assets/8.png)
+![](https://github.com/cannoyroy/BasicForum/blob/main/assets/9.png)
+![](https://github.com/cannoyroy/BasicForum/blob/main/assets/10.png)
 
 # 项目笔记
 
