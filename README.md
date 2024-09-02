@@ -100,7 +100,9 @@ forumjh // 前端
 
 在“审核被举报的帖子”板块，认为`user_id`参数用处不大，所以后端就没对其进行使用。因为审核帖子只针对帖子本身内容，而与发帖的人和举报的人无关。且“(使用者本人)”的表述也带有奇异，后期若修改此处时，务必确定好其定义。
 
-运行时需要添加后端的数据库配置文件
+运行时需要添加后端的数据库配置文件，并且进行相关配置安装：
+
+node安装；`npm install`；`npm install axios`
 
 **SQL表创建脚本**
 
@@ -139,7 +141,29 @@ CREATE TABLE report (
 );
 ```
 
+GitHub忽略了上传的 .gitignore 文件
 
+# 项目浏览
+
+![4](./README.assets/4.png)
+
+![5](./README.assets/5.png)
+
+![6](./README.assets/6.png)
+
+![7](./README.assets/7.png)
+
+![8](./README.assets/8.png)
+
+![9](./README.assets/9.png)
+
+![10](./README.assets/10.png)
+
+![1](./README.assets/1.png)
+
+![2](./README.assets/2.png)
+
+![3](./README.assets/3.png)
 
 # 项目笔记
 
