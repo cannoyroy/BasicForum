@@ -145,25 +145,8 @@ GitHub忽略了上传的 .gitignore 文件
 
 # 项目浏览
 
-![4](./README.assets/4.png)
+![](https://github.com/cannoyroy/BasicForum/blob/main/assets/1.png)
 
-![5](./README.assets/5.png)
-
-![6](./README.assets/6.png)
-
-![7](./README.assets/7.png)
-
-![8](./README.assets/8.png)
-
-![9](./README.assets/9.png)
-
-![10](./README.assets/10.png)
-
-![1](./README.assets/1.png)
-
-![2](./README.assets/2.png)
-
-![3](./README.assets/3.png)
 
 # 项目笔记
 
