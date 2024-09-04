@@ -4,6 +4,10 @@
 
 技术栈：Vue3+Axios；Golang(gin+gorm+viper)；MySQL
 
+项目目标：基本理解前后端的交互逻辑以及网站的开发逻辑
+
+前提申明：未使用相关组件，所以页面简陋。
+
 ### 功能
 
 - [x] 前端辅助功能
@@ -22,11 +26,16 @@
 
 若失败，弹窗告知理由
 
+若用户名/姓名超过长度，则阻止输入
+
 - [x] 学生发帖
 
-帖子内容（后台同时发送发帖人信息）
+帖子内容（后台同时发送发帖人信息），字数统计/警告，内容不作截断处理
 
 - [x] 学生获取所有发布的帖子
+
+换行展示
+
 - [x] 修改帖子
 - [x] 删除帖子
 - [x] 举报帖子
@@ -38,12 +47,24 @@
 
 ```
 server // 后端
-├── app
-│   ├── models 		// 请求和数据库模型结构。
-│   ├── services 	// 业务逻辑，一系列服务端点
-│   └── utils 		// 一些封装好的工具
-├── config 			// 配置相关
-│   ├── config 		//配置数据库连接信息
+├── internal
+│   ├── global
+│   │   └── config.go
+│   ├── midwares
+│   │   └── midwares.go
+│   ├── models
+│   │   └── models.go
+│   ├── pkg\database
+│   │   └── mysql.go
+│   ├── router
+│   │   └── router.go
+│   └── services
+│       │── common.go
+│       └── services.go
+├── conf
+│   └── config
+├── pkg
+│   └── utils
 ├── main.go 		//项目入口文件
 │
 │
@@ -91,10 +112,18 @@ forumjh // 前端
 
 ### ~~项目缺陷~~-TO DO LIST
 
-- 前端-命名时混淆了teacher和admin
-- 前端-竖屏时标题未能拒接
 - 前端-VUE报错`Unable to resolve `@import "./src/style/header.css"` from D:/BaiduSyncdisk/项目汇总/soft/2024年暑假招新大作业/forumjh/src/views`
-- 后端-举报已被举报通过的帖子仍会成功，并且使该帖子状态变回0
+- ~~前端-发帖长度限制~~
+- 前端-界面UI 极限情况
+- ~~前端-安全性问题~~
+- ~~前端-注销按钮~~
+- ~~前端-router/index.js 二级路由~~
+- ~~后端-目录~~框架【努力修复中，但感觉无力回天，应该前期就预定好固定的项目规范文档】
+- ~~后端-main.go viper/数据库 单独调用，不要放到这里~~
+- ~~后端-user-id 主键自增？~~
+- ~~后端-举报记录保留~~
+- ~~后端-安全，是否是管理员~~
+- ~~后端-举报已被举报通过的帖子仍会成功，并且使该帖子状态变回0~~
 
 ### 其他备注
 
@@ -108,7 +137,7 @@ node安装；`npm install`；`npm install axios`
 
 ```sql
 CREATE TABLE IF NOT EXISTS users (
-  user_id INT PRIMARY KEY AUTO_INCREMENT,
+  user_id INT PRIMARY KEY,
   username VARCHAR(50) NOT NULL UNIQUE,
   name VARCHAR(100) NOT NULL,
   password VARCHAR(255) NOT NULL CHECK (LENGTH(password) > 8 AND LENGTH(password) < 16),
@@ -119,7 +148,7 @@ CREATE TABLE IF NOT EXISTS users (
 
 ```sql
 CREATE TABLE posts (
-    post_id INT AUTO_INCREMENT PRIMARY KEY,
+    post_id INT PRIMARY KEY,
     user_id INT,
     username VARCHAR(50) NOT NULL,
     name VARCHAR(100) NOT NULL,
@@ -133,7 +162,7 @@ CREATE TABLE posts (
 
 ```sql
 CREATE TABLE report (
-    report_id INT PRIMARY KEY AUTO_INCREMENT,
+    report_id INT PRIMARY KEY,
     post_id INT,
     report_user_id INT,
     reason VARCHAR(255),
@@ -141,20 +170,20 @@ CREATE TABLE report (
 );
 ```
 
+```sql
+CREATE TABLE trash (
+    report_id INT PRIMARY KEY,
+    post_id INT,
+    report_user_id INT,
+    reason VARCHAR(255),
+    state INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+
+
 GitHub忽略了上传的 .gitignore 文件
-
-# 项目浏览
-
-![](https://github.com/cannoyroy/BasicForum/blob/main/assets/1.png)
-![](https://github.com/cannoyroy/BasicForum/blob/main/assets/2.png)
-![](https://github.com/cannoyroy/BasicForum/blob/main/assets/3.png)
-![](https://github.com/cannoyroy/BasicForum/blob/main/assets/4.png)
-![](https://github.com/cannoyroy/BasicForum/blob/main/assets/5.png)
-![](https://github.com/cannoyroy/BasicForum/blob/main/assets/6.png)
-![](https://github.com/cannoyroy/BasicForum/blob/main/assets/7.png)
-![](https://github.com/cannoyroy/BasicForum/blob/main/assets/8.png)
-![](https://github.com/cannoyroy/BasicForum/blob/main/assets/9.png)
-![](https://github.com/cannoyroy/BasicForum/blob/main/assets/10.png)
 
 # 项目笔记
 
@@ -532,7 +561,7 @@ CREATE TABLE IF NOT EXISTS users (
 
 ```sql
 CREATE TABLE posts (
-    post_id INT AUTO_INCREMENT PRIMARY KEY,
+    post_id INT PRIMARY KEY,
     user_id INT,
     username VARCHAR(50) NOT NULL,
     name VARCHAR(100) NOT NULL,
@@ -546,7 +575,7 @@ CREATE TABLE posts (
 
 ```sql
 CREATE TABLE report (
-    report_id INT PRIMARY KEY AUTO_INCREMENT,
+    report_id INT PRIMARY KEY,
     post_id INT,
     report_user_id INT,
     reason VARCHAR(255),
@@ -730,6 +759,12 @@ func main() {
 
 ## 前端
 
+### VUE框架
+
+### HTML
+
+- `<ul>`：这是一个无序列表（Unordered List）的标签，用于包裹一系列的列表项。在网页中，`<ul>` 通常会以项目符号（如圆点、方块等）的形式展示列表项。
+- `<li>`：这是列表项（List Item）的标签，用于定义列表中的具体项目。每个 `<li>` 标签代表列表中的一个条目。
 ### OPTIONS请求
 
 `OPTIONS` requests are what we call "preflight" requests in Cross-origin resource sharing (CORS).
