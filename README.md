@@ -185,6 +185,9 @@ CREATE TABLE trash (
 
 GitHub忽略了上传的 .gitignore 文件
 
+### 预览
+![][https://github.com/cannoyroy/BasicForum/blob/main/assets/1.png]
+
 # 项目笔记
 
 ## 后端
